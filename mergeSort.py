@@ -1,0 +1,68 @@
+import time
+import decimal
+from random import randint
+
+def mergeSort(a):  
+    current_size = 1
+    while current_size < len(a) - 1:  
+          
+        left = 0
+        while left < len(a)-1:    
+            mid = min((left + current_size - 1),(len(a)-1)) 
+            right = ((2 * current_size + left - 1,  
+                    len(a) - 1)[2 * current_size  + left - 1 > len(a)-1])   
+            merge(a, left, mid, right)  
+            left = left + current_size*2  
+        current_size = 2 * current_size  
+
+def merge(a, l, m, r):  
+    n1 = m - l + 1
+    n2 = r - m  
+    L = [0] * n1  
+    R = [0] * n2  
+    for i in range(0, n1):  
+        L[i] = a[l + i]  
+    for i in range(0, n2):  
+        R[i] = a[m + i + 1]  
+  
+    i, j, k = 0, 0, l  
+    while i < n1 and j < n2:  
+        if L[i] > R[j]:  
+            a[k] = R[j]  
+            j += 1
+        else:  
+            a[k] = L[i]  
+            i += 1
+        k += 1
+  
+    while i < n1:  
+        a[k] = L[i]  
+        i += 1
+        k += 1
+  
+    while j < n2:  
+        a[k] = R[j]  
+        j += 1
+        k += 1
+  
+a = [i for i in range(1,10001)]
+b= [i for i in range(10000,-1,-1)]
+c = [randint(1,10001) for i in range(1,10001)]
+n = len(a)
+
+then = time.perf_counter()
+mergeSort(a)
+now = time.perf_counter()
+
+then2 = time.perf_counter()
+mergeSort(b)
+now2 = time.perf_counter()
+
+then3 = time.perf_counter()
+mergeSort(c)
+now3 = time.perf_counter()
+
+print(a,b,c)
+print("Time Taken: ", str(decimal.Decimal(now - then)))
+print("Time Taken: ", str(decimal.Decimal(now2 - then2)))
+print("Time Taken: ", str(decimal.Decimal(now3 - then3)))
